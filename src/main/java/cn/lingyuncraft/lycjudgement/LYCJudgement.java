@@ -15,7 +15,7 @@ public final class LYCJudgement extends JavaPlugin {
     public static String vote_success;
     public static String player_is_not_being_voted;
     public static String player_is_already_being_voted;
-
+    public static String already_voted;
 
     @Override
     public void onEnable() {
@@ -29,6 +29,7 @@ public final class LYCJudgement extends JavaPlugin {
         vote_success = getConfig().getString("lang.vote-success");
         player_is_not_being_voted = getConfig().getString("lang.player-is-not-being-voted");
         player_is_already_being_voted = getConfig().getString("lang.player-is-already-being-voted");
+        already_voted = getConfig().getString("lang.already-voted");
 
         instance = this;
 

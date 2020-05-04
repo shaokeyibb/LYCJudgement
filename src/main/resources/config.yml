@@ -6,4 +6,5 @@ lang:
   ban-success: "§c玩家 {player} 已被风纪委员系统封禁"
   vote-success: "§a投票成功!当前投票数 {current}/{max}"
   player-is-not-being-voted: "§c目标玩家未被正在投票封禁"
-  player-is-already-being-voted: "目标玩家已经正在被投票封禁"
+  player-is-already-being-voted: "§c目标玩家已经正在被投票封禁"
+  already-voted: "§c您已经投过票了"
