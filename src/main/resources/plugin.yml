@@ -1,0 +1,11 @@
+name: LYCJudgement
+version: ${project.version}
+main: cn.lingyuncraft.lycjudgement.LYCJudgement
+api-version: 1.13
+commands:
+  judgement:
+    description: "风纪委员指令"
+    usage: "/judgement kick 玩家名 理由"
+    aliases: [ju]
+    permission: "judgement.use"
+    permission-message: "§c您没有权限执行此命令"
