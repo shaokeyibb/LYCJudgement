@@ -1,6 +1,7 @@
 package cn.lingyuncraft.lycjudgement;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LYCJudgement extends JavaPlugin {
@@ -16,11 +17,12 @@ public final class LYCJudgement extends JavaPlugin {
     public static String player_is_not_being_voted;
     public static String player_is_already_being_voted;
     public static String already_voted;
+    public static long vote_timed_out;
 
     @Override
-    public void onEnable() {
-        // Plugin startup logic
-        saveDefaultConfig();
+    public void reloadConfig() {
+        super.reloadConfig();
+
         ban_command = getConfig().getString("ban-command");
         vote_up_player_percent = getConfig().getDouble("vote-up-player-percent");
         player_is_invalid = getConfig().getString("lang.player-is-invalid");
@@ -30,10 +32,18 @@ public final class LYCJudgement extends JavaPlugin {
         player_is_not_being_voted = getConfig().getString("lang.player-is-not-being-voted");
         player_is_already_being_voted = getConfig().getString("lang.player-is-already-being-voted");
         already_voted = getConfig().getString("lang.already-voted");
+        vote_timed_out = getConfig().getLong("vote-timed-out");
+    }
 
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+        saveDefaultConfig();
         instance = this;
-
-        Bukkit.getPluginCommand("judgement").setExecutor(new CommandExec());
+        reloadConfig();
+        final PluginCommand command = Bukkit.getPluginCommand("judgement");
+        assert command != null;
+        command.setExecutor(new CommandExec());
     }
 
     public static LYCJudgement getInstance() {

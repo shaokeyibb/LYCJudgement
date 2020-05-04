@@ -1,5 +1,6 @@
 ban-command: "litebans:ban {player} 3days {reason}"
 vote-up-player-percent: 0.5
+vote-timed-out: 60000 # 1min
 lang:
   player-is-invalid: "§c玩家不在线或是不存在"
   broadcast: "§b玩家 {player} 正被风纪委员系统以 {reason} 的理由投票封禁，输入/ju vote {player} 以投票封禁玩家"
