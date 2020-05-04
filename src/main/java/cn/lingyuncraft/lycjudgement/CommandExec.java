@@ -69,8 +69,8 @@ public class CommandExec implements CommandExecutor {
                         if (status.voted.add(sender.getName())) {
                             sender.sendMessage(
                                     LYCJudgement.vote_success
-                                            .replace("{current}", String.valueOf(status.counter())).
-                                            replace("{max}", String.valueOf(Bukkit.getOnlinePlayers().size()))
+                                            .replace("{current}", String.valueOf(status.counter()))
+                                            .replace("{max}", String.valueOf(Bukkit.getOnlinePlayers().size()))
                             );
                             if (status.counter() >= Bukkit.getOnlinePlayers().size() * LYCJudgement.vote_up_player_percent) {
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
