@@ -30,10 +30,12 @@ public class CommandExec implements CommandExecutor {
                             if (counter.containsKey(player.getName())) {
                                 sender.sendMessage(LYCJudgement.player_is_already_being_voted);
                             } else {
-                                counter.put(player.getName(), 0);
+                                counter.put(player.getName(), 1);
                                 reason.put(player.getName(), args[2]);
                                 voted.put(player.getName(),new ArrayList<>());
                                 Bukkit.broadcastMessage(LYCJudgement.broadcast.replace("{player}", args[1]).replace("{reason}", args[2]));
+                                voted.get(args[1]).add(sender.getName());
+                                sender.sendMessage(LYCJudgement.vote_success.replace("{current}", String.valueOf(counter.get(args[1]))).replace("{max}", String.valueOf(Bukkit.getOnlinePlayers().size())));
                             }
                             return true;
                         } else {
