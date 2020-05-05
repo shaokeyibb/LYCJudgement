@@ -39,6 +39,10 @@ public class CommandExec implements CommandExecutor {
                         if (status != null) {
                             sender.sendMessage(LYCJudgement.player_is_already_being_voted);
                         } else {
+                            if (player == sender) {
+                                player.kickPlayer(LYCJudgement.ban_success.replace("{player}", args[1]));
+                                return true;
+                            }
                             Bukkit.broadcastMessage(
                                     LYCJudgement.broadcast
                                             .replace("{player}", args[1])
