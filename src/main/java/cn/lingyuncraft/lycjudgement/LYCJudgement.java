@@ -43,7 +43,9 @@ public final class LYCJudgement extends JavaPlugin {
         reloadConfig();
         final PluginCommand command = Bukkit.getPluginCommand("judgement");
         assert command != null;
-        command.setExecutor(new CommandExec());
+        CommandExec exec = new CommandExec();
+        command.setExecutor(exec);
+        command.setTabCompleter(exec);
     }
 
     public static LYCJudgement getInstance() {
