@@ -2,16 +2,14 @@ package cn.lingyuncraft.lycjudgement;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class CommandExec implements CommandExecutor {
+public class CommandExec implements TabExecutor {
     private static class VoteStatus {
         final long create = System.currentTimeMillis();
         String reason;
@@ -23,6 +21,40 @@ public class CommandExec implements CommandExecutor {
     }
 
     final Map<String, VoteStatus> voteStatus = new HashMap<>();
+
+    private static List<String> filter(String[] args, Collection<String> completes) {
+        if (completes == null || completes.isEmpty()) return Collections.emptyList();
+        if (args == null || args.length == 0) {
+            if (completes instanceof List) {
+                return (List<String>) completes;
+            }
+            return new LinkedList<>(completes);
+        }
+        String last = args[args.length - 1].toLowerCase();
+        return completes.stream().filter(it -> it.toLowerCase().startsWith(last))
+                .sorted(String::compareTo)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        switch (args.length) {
+            case 0:
+            case 1: {
+                return filter(args, Arrays.asList("kick", "vote"));
+            }
+            case 2: {
+                String first = args[0];
+                if (first.equals("kick")) {
+                    return null;
+                } else if (first.equals("vote")) {
+                    return filter(args, voteStatus.keySet());
+                }
+            }
+            default:
+                return Collections.emptyList();
+        }
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -39,6 +71,10 @@ public class CommandExec implements CommandExecutor {
                         if (status != null) {
                             sender.sendMessage(LYCJudgement.player_is_already_being_voted);
                         } else {
+                            if (player == sender) {
+                                player.kickPlayer(LYCJudgement.ban_success.replace("{player}", args[1]));
+                                return true;
+                            }
                             Bukkit.broadcastMessage(
                                     LYCJudgement.broadcast
                                             .replace("{player}", args[1])
