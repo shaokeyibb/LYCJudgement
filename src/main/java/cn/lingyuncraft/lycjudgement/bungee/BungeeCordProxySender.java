@@ -37,6 +37,9 @@ public class BungeeCordProxySender extends BungeeCordProxyCommandSender {
 
     @Override
     public boolean eq(ProxyCommandSender sender) {
+        if (sender instanceof BungeeCordProxyCommandSender) {
+            return ((BungeeCordProxyCommandSender) sender).getSender().equals(this.sender);
+        }
         return false;
     }
 }

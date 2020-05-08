@@ -59,7 +59,9 @@ public class BungeeCordCommandExec extends Command implements TabExecutor {
         } else {
             sender = new BungeeCordProxySender(commandSender);
         }
-        exec.onCommand(sender, args);
+        if (!exec.onCommand(sender, args)) {
+            commandSender.sendMessage(new TextComponent("/judgement kick 玩家名 理由"));
+        }
     }
 
     @Override
