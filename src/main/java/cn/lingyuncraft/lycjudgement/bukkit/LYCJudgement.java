@@ -1,23 +1,16 @@
-package cn.lingyuncraft.lycjudgement;
+package cn.lingyuncraft.lycjudgement.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static cn.lingyuncraft.lycjudgement.LYCJudgementConfig.*;
+
+@SuppressWarnings("unused")
 public final class LYCJudgement extends JavaPlugin {
 
     private static LYCJudgement instance;
 
-    public static String ban_command;
-    public static double vote_up_player_percent;
-    public static String player_is_invalid;
-    public static String broadcast;
-    public static String ban_success;
-    public static String vote_success;
-    public static String player_is_not_being_voted;
-    public static String player_is_already_being_voted;
-    public static String already_voted;
-    public static long vote_timed_out;
 
     @Override
     public void reloadConfig() {
@@ -43,9 +36,11 @@ public final class LYCJudgement extends JavaPlugin {
         reloadConfig();
         final PluginCommand command = Bukkit.getPluginCommand("judgement");
         assert command != null;
+        /*
         CommandExec exec = new CommandExec();
         command.setExecutor(exec);
         command.setTabCompleter(exec);
+         */
     }
 
     public static LYCJudgement getInstance() {

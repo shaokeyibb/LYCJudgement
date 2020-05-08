@@ -1,0 +1,3 @@
+name: LYCJudgement
+version: ${project.version}
+main: cn.lingyuncraft.lycjudgement.bungee.LYCJudgement

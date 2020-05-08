@@ -1,7 +1,7 @@
 name: LYCJudgement
 version: ${project.version}
-main: cn.lingyuncraft.lycjudgement.LYCJudgement
-api-version: 1.13
+main: cn.lingyuncraft.lycjudgement.bukkit.LYCJudgement
+api-version: "1.13"
 commands:
   judgement:
     description: "风纪委员指令"
