@@ -11,9 +11,17 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BukkitCommandExec extends CommandExec implements TabExecutor {
+    @Override
+    protected @NotNull Collection<String> getOnlineModifiablePlayerNames() {
+        return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toCollection(HashSet::new));
+    }
+
     @Override
     protected @Nullable ProxyCommandSender getPlayer(@NotNull String name) {
         Player player = Bukkit.getPlayer(name);

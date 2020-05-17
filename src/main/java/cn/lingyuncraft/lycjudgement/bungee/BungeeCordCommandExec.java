@@ -11,6 +11,8 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +23,11 @@ public class BungeeCordCommandExec extends Command implements TabExecutor {
     }
 
     private static final CommandExec exec = new CommandExec() {
+        @Override
+        protected @NotNull Collection<String> getOnlineModifiablePlayerNames() {
+            return ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toCollection(HashSet::new));
+        }
+
         @Override
         protected @Nullable ProxyCommandSender getPlayer(@NotNull String name) {
             final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(name);

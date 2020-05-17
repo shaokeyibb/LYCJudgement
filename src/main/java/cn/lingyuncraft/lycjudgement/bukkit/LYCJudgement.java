@@ -1,8 +1,13 @@
 package cn.lingyuncraft.lycjudgement.bukkit;
 
+import cn.lingyuncraft.lycjudgement.CachedPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import static cn.lingyuncraft.lycjudgement.LYCJudgementConfig.*;
 
@@ -39,6 +44,16 @@ public final class LYCJudgement extends JavaPlugin {
         BukkitCommandExec exec = new BukkitCommandExec();
         command.setExecutor(exec);
         command.setTabCompleter(exec);
+        // see #4
+        getServer().getPluginManager().registerEvents(new Listener() {
+            @EventHandler
+            public void on(@NotNull PlayerQuitEvent event) {
+                CachedPlayer.OFFLINE_PLAYERS.put(
+                        event.getPlayer().getName(),
+                        new CachedPlayer(event.getPlayer().getName(), event.getPlayer().getUniqueId())
+                );
+            }
+        }, this);
     }
 
     public static LYCJudgement getInstance() {

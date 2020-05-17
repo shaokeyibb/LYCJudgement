@@ -1,9 +1,14 @@
 package cn.lingyuncraft.lycjudgement.bungee;
 
+import cn.lingyuncraft.lycjudgement.CachedPlayer;
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import net.md_5.bungee.event.EventHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -68,5 +73,15 @@ public class LYCJudgement extends Plugin {
             return;
         }
         getProxy().getPluginManager().registerCommand(this, new BungeeCordCommandExec());
+        // see #4
+        getProxy().getPluginManager().registerListener(this, new Listener() {
+            @EventHandler
+            public void on(@NotNull PlayerDisconnectEvent event) {
+                CachedPlayer.OFFLINE_PLAYERS.put(
+                        event.getPlayer().getName(),
+                        new CachedPlayer(event.getPlayer().getName(), event.getPlayer().getUniqueId())
+                );
+            }
+        });
     }
 }

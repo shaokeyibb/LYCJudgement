@@ -45,7 +45,9 @@ public abstract class CommandExec {
             case 2: {
                 String first = args[0];
                 if (first.equals("kick")) {
-                    return null;
+                    final Collection<String> names = getOnlineModifiablePlayerNames();
+                    names.addAll(CachedPlayer.OFFLINE_PLAYERS.asMap().keySet());
+                    return filter(args, names);
                 } else if (first.equals("vote")) {
                     return filter(args, voteStatus.keySet());
                 }
@@ -54,6 +56,8 @@ public abstract class CommandExec {
                 return Collections.emptyList();
         }
     }
+
+    protected abstract @NotNull Collection<String> getOnlineModifiablePlayerNames();
 
     protected abstract @Nullable ProxyCommandSender getPlayer(@NotNull String name);
 
@@ -68,7 +72,7 @@ public abstract class CommandExec {
             }
             if (args[0].equalsIgnoreCase("kick")) {
                 if (args.length == 3) {
-                    ProxyCommandSender player = getPlayer(args[1]);
+                    ProxyCommandSender player = findPlayerOrOffline(args[1]);
                     if (player != null) {
                         final VoteStatus status = this.voteStatus.get(player.getName());
                         if (status != null) {
@@ -139,6 +143,14 @@ public abstract class CommandExec {
             return false;
         }
         return true;
+    }
+
+    private ProxyCommandSender findPlayerOrOffline(String name) {
+        ProxyCommandSender result = getPlayer(name);
+        if (result == null) {
+            return CachedPlayer.OFFLINE_PLAYERS.getIfPresent(name);
+        }
+        return result;
     }
 
     protected abstract void dispatchCommand(
