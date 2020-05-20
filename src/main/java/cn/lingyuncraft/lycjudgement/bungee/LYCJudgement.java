@@ -40,6 +40,7 @@ public class LYCJudgement extends Plugin {
         player_is_already_being_voted = configuration.getString("lang.player-is-already-being-voted");
         already_voted = configuration.getString("lang.already-voted");
         vote_timed_out = configuration.getLong("vote-timed-out");
+        plugin_version = getDescription().getVersion();
 
         return true;
     }

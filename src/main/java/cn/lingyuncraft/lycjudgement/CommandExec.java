@@ -40,7 +40,7 @@ public abstract class CommandExec {
         switch (args.length) {
             case 0:
             case 1: {
-                return filter(args, Arrays.asList("kick", "vote"));
+                return filter(args, Arrays.asList("kick", "vote", "ver"));
             }
             case 2: {
                 String first = args[0];
@@ -65,7 +65,7 @@ public abstract class CommandExec {
             @NotNull ProxyCommandSender sender,
             @NotNull String[] args
     ) {
-        if (args.length >= 2) {
+        if (args.length >= 1) {
             {
                 long current = System.currentTimeMillis();
                 voteStatus.entrySet().removeIf(entry -> current - entry.getValue().create > LYCJudgementConfig.vote_timed_out);
@@ -138,6 +138,10 @@ public abstract class CommandExec {
                 } else {
                     return false;
                 }
+            } else if (args[0].equalsIgnoreCase("ver")) {
+                sender.sendMessage("§bLYCJudgement §6>>> §bThis server is running LYCJudgement v§e" + LYCJudgementConfig.plugin_version);
+                sender.sendMessage("§bLYCJudgement §6>>> §bMade by §6§mKarlatemp§b,§6 shaokeyibb");
+                return true;
             }
         } else {
             return false;

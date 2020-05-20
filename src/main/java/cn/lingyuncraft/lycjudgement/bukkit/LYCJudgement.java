@@ -31,6 +31,7 @@ public final class LYCJudgement extends JavaPlugin {
         player_is_already_being_voted = getConfig().getString("lang.player-is-already-being-voted");
         already_voted = getConfig().getString("lang.already-voted");
         vote_timed_out = getConfig().getLong("vote-timed-out");
+        plugin_version = getDescription().getVersion();
     }
 
     @Override

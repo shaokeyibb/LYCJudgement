@@ -12,4 +12,5 @@ public class LYCJudgementConfig {
     public static String player_is_already_being_voted;
     public static String already_voted;
     public static long vote_timed_out;
+    public static String plugin_version;
 }
