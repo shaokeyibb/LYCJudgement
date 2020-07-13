@@ -2,6 +2,7 @@ package cn.lingyuncraft.lycjudgement.bungee;
 
 import cn.lingyuncraft.lycjudgement.CachedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -77,7 +78,7 @@ public class LYCJudgement extends Plugin {
         // see #4
         getProxy().getPluginManager().registerListener(this, new Listener() {
             @EventHandler
-            public void on(@NotNull PlayerDisconnectEvent event) {
+            public void on(@NotNull ServerDisconnectEvent event) {
                 CachedPlayer.OFFLINE_PLAYERS.put(
                         event.getPlayer().getName(),
                         new CachedPlayer(event.getPlayer().getName(), event.getPlayer().getUniqueId())
